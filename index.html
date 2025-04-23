@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Power of Happiness</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="resources/logo.avif" alt="HerPower Logo">
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>The Power of Happiness</h1>
+                <p>Explore the science of happiness through five transformative modules designed to nurture your mind, body, and spirit.</p>
+                <button class="cta-button" onclick="scrollToFeatures()">Start Your Journey</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <a href="foundations.html" class="feature-card">
+                <div class="number">01</div>
+                <h3>Foundations of Happiness</h3>
+                <p>Learn the fundamental principles and science behind lasting happiness.</p>
+            </a>
+            <a href="happy-mind.html" class="feature-card">
+                <div class="number">02</div>
+                <h3>The Science of a Happy Mind</h3>
+                <p>Understand the psychology and neuroscience behind happiness and well-being.</p>
+            </a>
+            <a href="happy-habits.html" class="feature-card">
+                <div class="number">03</div>
+                <h3>Lifestyle & Daily Habits for Happiness</h3>
+                <p>Build positive routines and habits that create lasting joy in everyday life.</p>
+            </a>
+            <a href="social-wellbeing.html" class="feature-card">
+                <div class="number">04</div>
+                <h3>Social and Emotional Well-being</h3>
+                <p>Strengthen relationships and develop emotional intelligence for deeper connections.</p>
+            </a>
+            <a href="meaning-purpose.html" class="feature-card">
+                <div class="number">05</div>
+                <h3>Finding Meaning & Purpose</h3>
+                <p>Discover your values and create a life aligned with what matters most to you.</p>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 The Power of Happiness. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    function scrollToFeatures() {
+        const featuresSection = document.querySelector('.features');
+        featuresSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+    </script>
+</body>
+</html> 
