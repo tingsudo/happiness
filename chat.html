@@ -6,6 +6,7 @@
     <title>Chat with HerPower</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .chat-container {
             max-width: 800px;
@@ -44,14 +45,48 @@
         }
 
         .user-message {
-            background: var(--primary-color);
-            color: white;
+            background: #FFE4E8;  /* Light pink background */
+            color: #333;  /* Darker text color for better contrast */
             margin-left: auto;
         }
 
         .bot-message {
             background: #f0f0f0;
             color: var(--text-color);
+        }
+
+        .bot-message p {
+            margin: 0.5em 0;
+        }
+
+        .bot-message ul, .bot-message ol {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+
+        .bot-message li {
+            margin: 0.3em 0;
+        }
+
+        .bot-message code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .bot-message pre {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .bot-message blockquote {
+            border-left: 3px solid var(--accent-color);
+            margin: 0.5em 0;
+            padding-left: 1em;
+            color: #666;
         }
 
         .chat-input {
@@ -118,7 +153,10 @@
 
         <div class="disclaimer" style="background-color: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #ffeeba;">
             <p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">
-                <strong>Disclaimer:</strong> This AI chat assistant is designed to provide general guidance and support for emotional well-being. It is not a substitute for professional medical advice, diagnosis, or treatment. If you're experiencing severe emotional distress or mental health concerns, please consult with a qualified healthcare provider or mental health professional. Your privacy is important to us - while we maintain confidentiality, please avoid sharing sensitive personal information during our conversations.
+                <strong>Disclaimer:</strong> This chatbot is for general communication guidance and emotional support only. It is not a substitute for professional medical, mental health, or legal advice. If you are experiencing distress or need professional help, please consult a licensed expert.
+            </p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; line-height: 1.5;">
+                If you encounter any issues or bugs, please report them—we appreciate your feedback!
             </p>
         </div>
 
@@ -230,7 +268,15 @@
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            messageDiv.textContent = text;
+            
+            if (sender === 'bot') {
+                // Parse markdown for bot messages
+                messageDiv.innerHTML = marked.parse(text);
+            } else {
+                // Keep user messages as plain text
+                messageDiv.textContent = text;
+            }
+            
             chatMessages.appendChild(messageDiv);
             
             // Scroll to bottom
