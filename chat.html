@@ -180,14 +180,11 @@
                     // Call Azure ChatGPT API
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST',
-                        mode: 'cors',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
-                            'Access-Control-Allow-Origin': '*',
-                            'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                            'Access-Control-Allow-Headers': 'Content-Type, Ocp-Apim-Subscription-Key'
+                            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
                         },
+                        credentials: 'omit',
                         body: JSON.stringify({
                             messages: [
                                 {
@@ -206,7 +203,9 @@
                     loadingDiv.remove();
 
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        const errorData = await response.text();
+                        console.error('API Error:', errorData);
+                        throw new Error(`API request failed with status ${response.status}`);
                     }
 
                     const data = await response.json();
@@ -215,7 +214,14 @@
 
                 } catch (error) {
                     console.error('Error:', error);
-                    addMessage('Sorry, I encountered an error. Please try again later.', 'bot');
+                    // Remove loading message if it exists
+                    const loadingDiv = document.querySelector('.message.bot-message:last-child');
+                    if (loadingDiv && loadingDiv.textContent === 'Thinking...') {
+                        loadingDiv.remove();
+                    }
+                    
+                    // Show user-friendly error message
+                    addMessage('I apologize, but I\'m having trouble connecting right now. This might be due to network issues or server maintenance. Please try again in a few moments.', 'bot');
                 }
             }
         }
