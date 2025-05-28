@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with HerPower</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .chat-header h1 {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: var(--primary-color);
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="resources/logo.avif" alt="HerPower Logo">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="chat-container">
+        <div class="chat-header">
+            <h1>Chat with HerPower</h1>
+            <p>Ask me anything about happiness and well-being!</p>
+        </div>
+
+        <div class="disclaimer" style="background-color: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #ffeeba;">
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">
+                <strong>Disclaimer:</strong> This AI chat assistant is designed to provide general guidance and support for emotional well-being. It is not a substitute for professional medical advice, diagnosis, or treatment. If you're experiencing severe emotional distress or mental health concerns, please consult with a qualified healthcare provider or mental health professional. Your privacy is important to us - while we maintain confidentiality, please avoid sharing sensitive personal information during our conversations.
+            </p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm your HerPower assistant. How can I help you today?
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message here..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 HerPower. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <a href="#" class="scroll-to-top" id="scrollTop" title="Scroll to Top" style="background-color: black; color: white; position: fixed; bottom: 40px; right: 40px; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 24px; z-index: 9999;">
+        ↑
+    </a>
+
+    <script>
+        // Azure ChatGPT API configuration
+        const API_ENDPOINT = 'https://xplority-bot-api-mgr.azure-api.net/chatbot/chat/completions';
+        const SUBSCRIPTION_KEY = '16d59b92925c409daaeef45e3e7315e5';
+
+        // Scroll to top functionality
+        document.getElementById("scrollTop").addEventListener("click", function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Chat functionality
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (message) {
+                // Add user message
+                addMessage(message, 'user');
+                
+                // Clear input
+                userInput.value = '';
+                
+                try {
+                    // Show loading message
+                    const loadingDiv = document.createElement('div');
+                    loadingDiv.className = 'message bot-message';
+                    loadingDiv.textContent = 'Thinking...';
+                    document.getElementById('chatMessages').appendChild(loadingDiv);
+
+                    // Call Azure ChatGPT API
+                    const response = await fetch(API_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
+                        },
+                        body: JSON.stringify({
+                            messages: [
+                                {
+                                    role: "system",
+                                    content: "You are a compassionate and emotionally intelligent AI conversation coach. Your role is to support and guide positive communication between parents and their teenage children. You help them understand each other's perspectives, express their feelings constructively, and find common ground. Your responses should reduce tension, prevent conflict, and foster mutual respect and empathy.\n\nUse the following principles:\n\nBe neutral, never take sides.\n\nEncourage both parties to listen and validate each other's feelings.\n\nUse simple, respectful language suitable for both teenagers and adults.\n\nOffer conversation tips, reflection prompts, and rephrasing suggestions.\n\nPromote curiosity over judgment, and cooperation over control.\n\nHelp reframe negative emotions into constructive dialogue.\n\nSuggest pauses, empathy-building activities, or breaks if the conversation escalates.\n\nAlways aim to build trust, emotional safety, and effective collaboration."
+                                },
+                                {
+                                    role: "user",
+                                    content: message
+                                }
+                            ]
+                        })
+                    });
+
+                    // Remove loading message
+                    loadingDiv.remove();
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    const botResponse = data.choices[0].message.content;
+                    addMessage(botResponse, 'bot');
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('Sorry, I encountered an error. Please try again later.', 'bot');
+                }
+            }
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Allow sending message with Enter key
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 
