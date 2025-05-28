@@ -112,7 +112,8 @@
     <main class="chat-container">
         <div class="chat-header">
             <h1>Chat with HerPower</h1>
-            <p>Ask me anything about happiness and well-being!</p>
+            <p>I'm here to help improve communication between parents and teens. </p>
+            <p>Let's work together to build understanding and strengthen your relationship!</p>
         </div>
 
         <div class="disclaimer" style="background-color: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #ffeeba;">
@@ -179,9 +180,13 @@
                     // Call Azure ChatGPT API
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST',
+                        mode: 'cors',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
+                            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                            'Access-Control-Allow-Headers': 'Content-Type, Ocp-Apim-Subscription-Key'
                         },
                         body: JSON.stringify({
                             messages: [
