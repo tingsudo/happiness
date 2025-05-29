@@ -267,18 +267,10 @@
         </div>
     </main>
 
-    <section class="visitor-stats">
-        <div class="stats-container">
-            <div class="visitor-counter">
-                <h2>Total Visitors</h2>
-                <div id="visitorCount">0</div>
-            </div>
-            <div class="visitor-map">
-                <h2>Visitor Locations</h2>
-                <div id="map"></div>
-            </div>
-        </div>
-    </section>
+    <!-- ClustrMaps Visitor Map Plugin -->
+    <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+        <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=HLXiGM_fUthMYdTqGzU3uh_oAH1cO2od2zWRfKNZz3U&cl=ffffff&w=a"></script>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -290,9 +282,6 @@
         ↑
     </a>
 
-    <!-- Add Mapbox GL JS -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
 
     <script>
         // Azure ChatGPT API configuration
@@ -359,8 +348,6 @@
             }
         }
 
-        // Initialize map when page loads
-        window.addEventListener('load', initMap);
 
         // Function to expand chat messages area
         function expandChatMessages() {
