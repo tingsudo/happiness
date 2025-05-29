@@ -11,11 +11,11 @@
         .chat-container {
             max-width: 1000px;
             margin: 2rem auto;
-            padding: 2rem;
+            padding: 1rem;
             background: white;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            min-height: 90vh;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
         }
@@ -33,7 +33,7 @@
         }
 
         .chat-messages {
-            height: 200px;
+            height: 150px;
             overflow-y: auto;
             padding: 1rem;
             border: 1px solid #eee;
@@ -131,12 +131,12 @@
         @media (max-width: 768px) {
             .chat-container {
                 margin: 1rem;
-                padding: 1rem;
-                min-height: 65vh;
+                padding: 0.5rem;
+                min-height: 250px;
             }
 
             .chat-messages {
-                height: 120px;
+                height: 100px;
             }
 
             .chat-messages.expanded {
@@ -155,6 +155,77 @@
         }
         .disclaimer a:hover {
             color: #a81c47;
+        }
+
+        .visitor-stats {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .visitor-counter {
+            flex: 0 0 200px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .visitor-counter h2 {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #visitorCount {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .visitor-map {
+            flex: 1;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .visitor-map h2 {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #map {
+            height: 250px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                padding: 0 1rem;
+            }
+
+            .visitor-counter {
+                flex: none;
+                width: 100%;
+            }
+
+            #map {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -176,10 +247,12 @@
             <p>I'm here to help improve  communication between parents and teens. </p>
         </div>
 
-        <div class="disclaimer" style="background-color: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #ffeeba;">
-            <p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">
-                <strong>Disclaimer:</strong> This chatbot is for general communication guidance and emotional support only. It is not a substitute for professional medical, mental health, or legal advice. If you are experiencing distress or need professional help, please consult a licensed expert. If you encounter any issues or bugs, please report them via our <a href="https://www.herpowercanada.org/joinus" target="_blank" rel="noopener noreferrer">contact page</a> — we appreciate your feedback!
-            </p>
+        <div class="disclaimer" id="disclaimerBox" style="background-color: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #ffeeba;">
+            <div id="disclaimerToggle" style="cursor:pointer; font-weight:600; display:flex; align-items:center; min-height: 1.5em; font-size:0.85rem;">
+                <span id="disclaimerToggleText">Show Disclaimer</span>
+                <span id="disclaimerArrow" style="margin-left:8px;">▼</span>
+            </div>
+            <div id="disclaimerContent" style="display:none; margin-top:0.5rem; font-size: 0.9rem; line-height: 1.5; padding: 0;"></div>
         </div>
 
         <div class="chat-messages" id="chatMessages">
@@ -194,6 +267,19 @@
         </div>
     </main>
 
+    <section class="visitor-stats">
+        <div class="stats-container">
+            <div class="visitor-counter">
+                <h2>Total Visitors</h2>
+                <div id="visitorCount">0</div>
+            </div>
+            <div class="visitor-map">
+                <h2>Visitor Locations</h2>
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 HerPower. All Rights Reserved.</p>
@@ -203,6 +289,10 @@
     <a href="#" class="scroll-to-top" id="scrollTop" title="Scroll to Top" style="background-color: black; color: white; position: fixed; bottom: 40px; right: 40px; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 24px; z-index: 9999;">
         ↑
     </a>
+
+    <!-- Add Mapbox GL JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
 
     <script>
         // Azure ChatGPT API configuration
@@ -216,6 +306,61 @@
                 content: "You are a compassionate and emotionally intelligent AI conversation coach. Your role is to support and guide positive communication between parents and their teenage children. You help them understand each other's perspectives, express their feelings constructively, and find common ground. Your responses should reduce tension, prevent conflict, and foster mutual respect and empathy.\n\nUse the following principles:\n\nBe neutral, never take sides.\n\nEncourage both parties to listen and validate each other's feelings.\n\nUse simple, respectful language suitable for both teenagers and adults.\n\nOffer conversation tips, reflection prompts, and rephrasing suggestions.\n\nPromote curiosity over judgment, and cooperation over control.\n\nHelp reframe negative emotions into constructive dialogue.\n\nSuggest pauses, empathy-building activities, or breaks if the conversation escalates.\n\nAlways aim to build trust, emotional safety, and effective collaboration."
             }
         ];
+
+        // Initialize visitor counter and map
+        let visitorCount = 0;
+        let visitorLocations = [];
+
+        // Function to initialize the map
+        function initMap() {
+            mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'; // Replace with your Mapbox token
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/light-v11',
+                center: [-95.7129, 37.0902], // Center of US
+                zoom: 3
+            });
+
+            // Add navigation controls
+            map.addControl(new mapboxgl.NavigationControl());
+
+            // Get visitor's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        
+                        // Add marker for visitor
+                        new mapboxgl.Marker()
+                            .setLngLat([longitude, latitude])
+                            .addTo(map);
+
+                        // Store visitor location
+                        visitorLocations.push({
+                            lng: longitude,
+                            lat: latitude,
+                            timestamp: new Date().toISOString()
+                        });
+
+                        // Update visitor count
+                        visitorCount++;
+                        document.getElementById('visitorCount').textContent = visitorCount;
+
+                        // Center map on visitor's location
+                        map.flyTo({
+                            center: [longitude, latitude],
+                            zoom: 8
+                        });
+                    },
+                    (error) => {
+                        console.error('Error getting location:', error);
+                    }
+                );
+            }
+        }
+
+        // Initialize map when page loads
+        window.addEventListener('load', initMap);
 
         // Function to expand chat messages area
         function expandChatMessages() {
@@ -334,6 +479,29 @@
             if (e.key === 'Enter') {
                 sendMessage();
             }
+        });
+
+        // Collapsible disclaimer functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('disclaimerToggle');
+            const content = document.getElementById('disclaimerContent');
+            const toggleText = document.getElementById('disclaimerToggleText');
+            const arrow = document.getElementById('disclaimerArrow');
+            let expanded = false;
+            // Set the disclaimer text only when expanded
+            const disclaimerHTML = `<strong>Disclaimer:</strong> This chatbot is for general communication guidance and emotional support only. It is not a substitute for professional medical, mental health, or legal advice. If you are experiencing distress or need professional help, please consult a licensed expert. If you encounter any issues or bugs, please report them via our <a href='https://www.herpowercanada.org/joinus' target='_blank' rel='noopener noreferrer'>contact page</a> — we appreciate your feedback!`;
+            toggle.addEventListener('click', function() {
+                expanded = !expanded;
+                if (expanded) {
+                    content.innerHTML = disclaimerHTML;
+                    content.style.display = 'block';
+                } else {
+                    content.innerHTML = '';
+                    content.style.display = 'none';
+                }
+                toggleText.textContent = expanded ? 'Hide Disclaimer' : 'Show Disclaimer';
+                arrow.textContent = expanded ? '▲' : '▼';
+            });
         });
     </script>
 </body>
