@@ -209,6 +209,14 @@
         const API_ENDPOINT = 'https://xplority-bot-api-mgr.azure-api.net/chatbot/chat/completions';
         const SUBSCRIPTION_KEY = '16d59b92925c409daaeef45e3e7315e5';
 
+        // Store conversation history
+        let conversationHistory = [
+            {
+                role: "system",
+                content: "You are a compassionate and emotionally intelligent AI conversation coach. Your role is to support and guide positive communication between parents and their teenage children. You help them understand each other's perspectives, express their feelings constructively, and find common ground. Your responses should reduce tension, prevent conflict, and foster mutual respect and empathy.\n\nUse the following principles:\n\nBe neutral, never take sides.\n\nEncourage both parties to listen and validate each other's feelings.\n\nUse simple, respectful language suitable for both teenagers and adults.\n\nOffer conversation tips, reflection prompts, and rephrasing suggestions.\n\nPromote curiosity over judgment, and cooperation over control.\n\nHelp reframe negative emotions into constructive dialogue.\n\nSuggest pauses, empathy-building activities, or breaks if the conversation escalates.\n\nAlways aim to build trust, emotional safety, and effective collaboration."
+            }
+        ];
+
         // Function to expand chat messages area
         function expandChatMessages() {
             const chatMessages = document.getElementById('chatMessages');
@@ -233,6 +241,12 @@
                 // Add user message
                 addMessage(message, 'user');
                 
+                // Add user message to conversation history
+                conversationHistory.push({
+                    role: "user",
+                    content: message
+                });
+                
                 // Clear input
                 userInput.value = '';
                 
@@ -243,7 +257,7 @@
                     loadingDiv.textContent = 'Thinking...';
                     document.getElementById('chatMessages').appendChild(loadingDiv);
 
-                    // Call Azure ChatGPT API
+                    // Call Azure ChatGPT API with conversation history
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST',
                         headers: {
@@ -252,16 +266,7 @@
                         },
                         credentials: 'omit',
                         body: JSON.stringify({
-                            messages: [
-                                {
-                                    role: "system",
-                                    content: "You are a compassionate and emotionally intelligent AI conversation coach. Your role is to support and guide positive communication between parents and their teenage children. You help them understand each other's perspectives, express their feelings constructively, and find common ground. Your responses should reduce tension, prevent conflict, and foster mutual respect and empathy.\n\nUse the following principles:\n\nBe neutral, never take sides.\n\nEncourage both parties to listen and validate each other's feelings.\n\nUse simple, respectful language suitable for both teenagers and adults.\n\nOffer conversation tips, reflection prompts, and rephrasing suggestions.\n\nPromote curiosity over judgment, and cooperation over control.\n\nHelp reframe negative emotions into constructive dialogue.\n\nSuggest pauses, empathy-building activities, or breaks if the conversation escalates.\n\nAlways aim to build trust, emotional safety, and effective collaboration."
-                                },
-                                {
-                                    role: "user",
-                                    content: message
-                                }
-                            ]
+                            messages: conversationHistory
                         })
                     });
 
@@ -276,6 +281,13 @@
 
                     const data = await response.json();
                     const botResponse = data.choices[0].message.content;
+                    
+                    // Add bot response to conversation history
+                    conversationHistory.push({
+                        role: "assistant",
+                        content: botResponse
+                    });
+                    
                     addMessage(botResponse, 'bot');
                     
                     // Expand chat messages area after receiving response
