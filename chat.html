@@ -281,9 +281,10 @@
         .testimonial-text {
             flex: 1;
             margin-bottom: 0.7rem;
+            font-size: 0.85rem;
         }
         .testimonial-user {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: #856404;
             font-weight: 600;
             letter-spacing: 0.01em;
@@ -316,23 +317,74 @@
         @media (max-width: 768px) {
             .bottom-row {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 max-width: 100%;
+                margin-top: 1.5rem;
             }
             .map-col, .carousel-col {
                 width: 100%;
                 justify-content: center;
-            }
-            .testimonial-carousel {
-                padding: 1rem;
-                min-height: 100px;
-            }
-            .testimonial-content {
-                height: 70px;
+                align-items: center;
             }
             .map-wrapper {
-                width: 140px;
-                height: 90px;
+                width: 90vw;
+                max-width: 220px;
+                height: 100px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .testimonial-carousel {
+                padding: 1.5rem 1.1rem;
+                min-height: 160px;
+                max-width: 98vw;
+                margin: 0 auto;
+                box-sizing: border-box;
+                border-radius: 30px;
+            }
+            .testimonial-content {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .carousel-arrow {
+                margin: 0 0.2rem;
+                min-width: 38px;
+            }
+            .testimonial-text {
+                font-size: 0.8rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+        /* Add a soft divider between map and carousel on mobile */
+        @media (max-width: 768px) {
+            .map-col {
+                border-bottom: 1.5px solid #f3e6e6;
+                padding-bottom: 1.2rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+        .map-bg {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 1.2rem 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .map-bg {
+                width: 98vw;
+                max-width: 240px;
+                padding: 1.2rem 0.2rem;
+                border-radius: 30px;
             }
         }
     </style>
@@ -378,8 +430,10 @@
     <!-- Bottom section: Map + Testimonial Carousel -->
     <section class="bottom-row">
         <div class="map-col">
-            <div class="map-wrapper">
-                <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=HLXiGM_fUthMYdTqGzU3uh_oAH1cO2od2zWRfKNZz3U&co=dba251&cmn=000000&cmo=c931bc'></script>
+            <div class="map-bg">
+                <div class="map-wrapper">
+                    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=HLXiGM_fUthMYdTqGzU3uh_oAH1cO2od2zWRfKNZz3U&co=dba251&cmn=000000&cmo=c931bc'></script>
+                </div>
             </div>
         </div>
         <div class="carousel-col">
