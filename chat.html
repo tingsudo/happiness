@@ -227,6 +227,114 @@
                 height: 180px;
             }
         }
+
+        .bottom-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2rem auto 0 auto;
+            padding: 0 1rem;
+        }
+        .map-col {
+            flex: 0 0 180px;
+            display: flex;
+            justify-content: center;
+        }
+        .map-wrapper {
+            width: 180px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-col {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+        }
+        .testimonial-carousel {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 1.2rem 2.2rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            min-height: 120px;
+        }
+        .testimonial-content {
+            flex: 1;
+            text-align: left;
+            font-size: 0.98rem;
+            color: #222;
+            font-family: 'Open Sans', sans-serif;
+            min-height: 70px;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .testimonial-text {
+            flex: 1;
+            margin-bottom: 0.7rem;
+        }
+        .testimonial-user {
+            font-size: 0.88rem;
+            color: #856404;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .carousel-arrow {
+            background: #fff3cd;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #d72660;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            margin: 0 0.5rem;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .carousel-arrow svg {
+            width: 20px;
+            height: 20px;
+        }
+        .carousel-arrow:hover {
+            background: #ffeeba;
+            color: #a81c47;
+            box-shadow: 0 4px 12px rgba(215,38,96,0.12);
+        }
+        @media (max-width: 768px) {
+            .bottom-row {
+                flex-direction: column;
+                gap: 1rem;
+                max-width: 100%;
+            }
+            .map-col, .carousel-col {
+                width: 100%;
+                justify-content: center;
+            }
+            .testimonial-carousel {
+                padding: 1rem;
+                min-height: 100px;
+            }
+            .testimonial-content {
+                min-height: 60px;
+            }
+            .map-wrapper {
+                width: 140px;
+                height: 90px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -267,10 +375,23 @@
         </div>
     </main>
 
-    <!-- ClustrMaps Visitor Map Plugin -->
-    <div style="width: 220px; margin: 0 auto 2rem auto; display: block;">
-        <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=HLXiGM_fUthMYdTqGzU3uh_oAH1cO2od2zWRfKNZz3U&cl=ffffff&w=a"></script>
-    </div>
+    <!-- Bottom section: Map + Testimonial Carousel -->
+    <section class="bottom-row">
+        <div class="map-col">
+            <div class="map-wrapper">
+                <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=HLXiGM_fUthMYdTqGzU3uh_oAH1cO2od2zWRfKNZz3U&cl=ffffff&w=a"></script>
+            </div>
+        </div>
+        <div class="carousel-col">
+            <div class="testimonial-carousel" id="testimonialCarousel">
+                <button class="carousel-arrow left" id="carouselPrev">&#8592;</button>
+                <div class="testimonial-content" id="testimonialContent">
+                    <!-- Testimonials will be injected here -->
+                </div>
+                <button class="carousel-arrow right" id="carouselNext">&#8594;</button>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="footer-content">
@@ -489,6 +610,47 @@
                 toggleText.textContent = expanded ? 'Hide Disclaimer' : 'Show Disclaimer';
                 arrow.textContent = expanded ? '▲' : '▼';
             });
+        });
+
+        // Testimonial carousel logic
+        const testimonials = [
+            {
+                text: "As a mom, HerPower Communication Coach helped me finally have a calm, meaningful conversation with my child about screen time. It gave me the right words and approach to connect with my kid in a way that felt respectful and effective.",
+                user: "Tina L., Parent of Teen"
+            },
+            {
+                text: "I was struggling to talk to my teen about school stress. The coach's tips made our talks less tense and more productive. Highly recommend!",
+                user: "James W., Father of Two"
+            },
+            {
+                text: "This chatbot gave me practical ways to listen to my daughter and made our relationship stronger.",
+                user: "Vivian S., Mom of a 15-year-old"
+            }
+        ];
+        let currentTestimonial = 0;
+        function showTestimonial(idx) {
+            const content = document.getElementById('testimonialContent');
+            content.innerHTML = `
+                <div class="testimonial-text">${testimonials[idx].text}</div>
+                <div class="testimonial-user">${testimonials[idx].user}</div>
+            `;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            showTestimonial(currentTestimonial);
+            document.getElementById('carouselPrev').innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
+            document.getElementById('carouselNext').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>';
+            document.getElementById('carouselPrev').onclick = function() {
+                currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            };
+            document.getElementById('carouselNext').onclick = function() {
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            };
+            setInterval(function() {
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            }, 8000);
         });
     </script>
 </body>
