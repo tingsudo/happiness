@@ -385,21 +385,24 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav style="display: flex; align-items: center; justify-content: space-between;">
             <div class="logo">
                 <img src="resources/logo.avif" alt="HerPower Logo">
             </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
+            <ul style="margin-right: 1.5rem;">
+                <li><a href="index.html" id="navHome">Home</a></li>
             </ul>
+            <div id="langSwitch" style="margin-left: 1rem; font-size: 1rem; cursor: pointer; user-select: none; font-weight: 600;">
+                <span id="langEN" style="color: #d72660;">EN</span> | <span id="langZH" style="color: #d72660;">中文</span>
+            </div>
         </nav>
     </header>
 
     <main class="chat-container">
         <div class="chat-header">
             <div style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left;">
-                <h1 style="margin-bottom: 0.3rem;">Chat with HerPower Coach</h1>
-                <p style="margin: 0;">I'm here to help improve  communication between parents and teens. </p>
+                <h1 style="margin-bottom: 0.3rem;" id="chatTitle">Chat with HerPower Coach</h1>
+                <p style="margin: 0;" id="chatSubtitle">I'm here to help improve  communication between parents and teens. </p>
             </div>
             <img src="resources/coach.png" alt="Coach" class="chat-header-img" style="height: 90px; width: 90px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.07); background: #fff6f8; margin-left: 0.5rem;" />
         </div>
@@ -413,14 +416,14 @@
         </div>
 
         <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">
+            <div class="message bot-message" id="initBotMsg">
                 Hello! I'm your communication coach, here to help improve understanding between parents and teens. How can I assist you today?
             </div>
         </div>
 
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type your message here..." />
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="sendMessage()" id="sendBtn">Send</button>
         </div>
     </main>
 
@@ -444,7 +447,7 @@
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2025 HerPower. All Rights Reserved.</p>
+            <p id="footerCopyright">&copy; 2025 HerPower. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -591,19 +594,19 @@
             const toggleText = document.getElementById('disclaimerToggleText');
             const arrow = document.getElementById('disclaimerArrow');
             let expanded = false;
-            // Set the disclaimer text only when expanded
-            const disclaimerHTML = `<strong>Disclaimer:</strong> This chatbot is for general communication guidance and emotional support only. It is not a substitute for professional medical, mental health, or legal advice. If you are experiencing distress or need professional help, please consult a licensed expert. If you encounter any issues or bugs, please report them via email: <a href='mailto:info@herpowercanada.org'>info@herpowercanada.org</a> — we appreciate your feedback!`;
             toggle.addEventListener('click', function() {
                 expanded = !expanded;
                 if (expanded) {
-                    content.innerHTML = disclaimerHTML;
+                    content.innerHTML = TEXTS[currentLang].disclaimer;
                     content.style.display = 'block';
+                    toggleText.textContent = TEXTS[currentLang].disclaimerHide;
+                    arrow.textContent = '▲';
                 } else {
                     content.innerHTML = '';
                     content.style.display = 'none';
+                    toggleText.textContent = TEXTS[currentLang].disclaimerShow;
+                    arrow.textContent = '▼';
                 }
-                toggleText.textContent = expanded ? 'Hide Disclaimer' : 'Show Disclaimer';
-                arrow.textContent = expanded ? '▲' : '▼';
             });
         });
 
@@ -646,6 +649,104 @@
                 currentTestimonial = (currentTestimonial + 1) % testimonials.length;
                 showTestimonial(currentTestimonial);
             }, 8000);
+        });
+
+        // 多语言文本
+        const TEXTS = {
+            en: {
+                navHome: 'Home',
+                chatTitle: 'Chat with HerPower Coach',
+                chatSubtitle: "I'm here to help improve  communication between parents and teens.",
+                disclaimerShow: 'Show Disclaimer',
+                disclaimerHide: 'Hide Disclaimer',
+                disclaimer: `<strong>Disclaimer:</strong> This chatbot is for general communication guidance and emotional support only. It is not a substitute for professional medical, mental health, or legal advice. If you are experiencing distress or need professional help, please consult a licensed expert. If you encounter any issues or bugs, please report them via email: <a href='mailto:info@herpowercanada.org'>info@herpowercanada.org</a> — we appreciate your feedback!`,
+                initBotMsg: "Hello! I'm your communication coach, here to help improve understanding between parents and teens. How can I assist you today?",
+                inputPlaceholder: 'Type your message here...',
+                sendBtn: 'Send',
+                copyright: '&copy; 2025 HerPower. All Rights Reserved.',
+                testimonials: [
+                    {
+                        text: "As a mom, HerPower Communication Coach helped me finally have a calm, meaningful conversation with my child about screen time. It gave me the right words and approach to connect with my kid in a way that felt respectful and effective.",
+                        user: "Tina L., Parent of Teen"
+                    },
+                    {
+                        text: "I was struggling to talk to my teen about school stress. The coach's tips made our talks less tense and more productive. Highly recommend!",
+                        user: "James W., Father of Two"
+                    },
+                    {
+                        text: "This chatbot gave me practical ways to listen to my daughter and made our relationship stronger.",
+                        user: "Vivian S., Mom of a 15-year-old"
+                    }
+                ]
+            },
+            zh: {
+                navHome: '首页',
+                chatTitle: '与HerPower教练对话',
+                chatSubtitle: '帮助改善父母与青少年之间的沟通',
+                disclaimerShow: '显示免责声明',
+                disclaimerHide: '隐藏免责声明',
+                disclaimer: `<strong>免责声明：</strong>本聊天机器人仅用于一般沟通指导和情感支持，不能替代专业医疗、心理健康或法律建议。如有困扰或需要专业帮助，请咨询持证专家。如遇到任何问题或bug，欢迎通过邮件反馈：<a href='mailto:info@herpowercanada.org'>info@herpowercanada.org</a>，感谢您的支持！`,
+                initBotMsg: '您好！我是您的沟通教练，致力于帮助父母与青少年更好地理解彼此。有什么我可以帮您的吗？',
+                inputPlaceholder: '请输入您的问题或想法……',
+                sendBtn: '发送',
+                copyright: '&copy; 2025 HerPower。保留所有权利。',
+                testimonials: [
+                    {
+                        text: "作为一名妈妈，HerPower沟通教练帮助我终于和孩子平静地聊了聊屏幕时间。它让我用更尊重和有效的方式与孩子沟通。",
+                        user: "李婷，青少年家长"
+                    },
+                    {
+                        text: "我很难和孩子聊学业压力，教练的建议让我们的对话不再紧张，更有成效。强烈推荐！",
+                        user: "王先生，两孩父亲"
+                    },
+                    {
+                        text: "这个机器人让我学会了倾听女儿，关系变得更亲近了。",
+                        user: "苏薇，15岁女孩的妈妈"
+                    }
+                ]
+            }
+        };
+        let currentLang = 'en';
+        function switchLang(lang) {
+            if (lang === currentLang) return;
+            currentLang = lang;
+            // 切换导航
+            document.getElementById('navHome').textContent = TEXTS[lang].navHome;
+            // 切换标题
+            document.getElementById('chatTitle').textContent = TEXTS[lang].chatTitle;
+            document.getElementById('chatSubtitle').textContent = TEXTS[lang].chatSubtitle;
+            // 切换免责声明按钮和内容
+            const toggleText = document.getElementById('disclaimerToggleText');
+            const arrow = document.getElementById('disclaimerArrow');
+            const disclaimerContent = document.getElementById('disclaimerContent');
+            if (disclaimerContent.style.display === 'block') {
+                toggleText.textContent = TEXTS[lang].disclaimerHide;
+                arrow.textContent = '▲';
+                disclaimerContent.innerHTML = TEXTS[lang].disclaimer;
+            } else {
+                toggleText.textContent = TEXTS[lang].disclaimerShow;
+                arrow.textContent = '▼';
+                disclaimerContent.innerHTML = '';
+            }
+            // 切换初始机器人消息
+            const initBotMsg = document.getElementById('initBotMsg');
+            if (initBotMsg) initBotMsg.textContent = TEXTS[lang].initBotMsg;
+            // 输入框
+            document.getElementById('userInput').placeholder = TEXTS[lang].inputPlaceholder;
+            // 发送按钮
+            document.getElementById('sendBtn').textContent = TEXTS[lang].sendBtn;
+            // 页脚
+            document.getElementById('footerCopyright').innerHTML = TEXTS[lang].copyright;
+            // 评价轮播
+            testimonials = TEXTS[lang].testimonials;
+            showTestimonial(currentTestimonial);
+            // 语言按钮高亮
+            document.getElementById('langEN').style.color = lang === 'en' ? '#d72660' : '#888';
+            document.getElementById('langZH').style.color = lang === 'zh' ? '#d72660' : '#888';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('langEN').onclick = function() { switchLang('en'); };
+            document.getElementById('langZH').onclick = function() { switchLang('zh'); };
         });
     </script>
 </body>
