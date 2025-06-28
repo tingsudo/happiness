@@ -415,6 +415,11 @@
             <div id="disclaimerContent" style="display:none; margin-top:0.5rem; font-size: 0.9rem; line-height: 1.5; padding: 0;"></div>
         </div>
 
+        <!-- Info Bar: Curriculum & Feedback -->
+        <div id="infoBar" style="background: #000; color: #fff; border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 1.2rem; border: 1px solid #333; font-size: 0.9rem; line-height: 1.4;">
+            Explore our curriculum and workshops: <a href="https://www.herpowercanada.org" target="_blank" style="color:#ec20b2; text-decoration:underline;">herpowercanada.org</a>. Share your feedback at <a href="mailto:info@herpowercanada.org" style="color:#ec20b2; text-decoration:underline;">info@herpowercanada.org</a> - thank you!
+        </div>
+
         <div class="chat-messages" id="chatMessages">
             <div class="message bot-message" id="initBotMsg">
                 Hello! I'm your communication coach, here to help improve understanding between parents and teens. How can I assist you today?
@@ -677,7 +682,8 @@
                         text: "This chatbot gave me practical ways to listen to my daughter and made our relationship stronger.",
                         user: "Vivian S., Mom of a 15-year-old"
                     }
-                ]
+                ],
+                infoBar: `Explore our curriculum and workshops: <a href="https://www.herpowercanada.org" target="_blank" style="color:#FF00FF; text-decoration:underline;">herpowercanada.org</a>. Share your feedback at <a href="mailto:info@herpowercanada.org" style="color:#FF00FF; text-decoration:underline;">info@herpowercanada.org</a> - thank you!`
             },
             zh: {
                 navHome: '首页',
@@ -703,7 +709,8 @@
                         text: "这个机器人让我学会了倾听女儿，关系变得更亲近了。",
                         user: "苏薇，15岁女孩的妈妈"
                     }
-                ]
+                ],
+                infoBar: `探索我们的课程和工作坊：<a href="https://www.herpowercanada.org" target="_blank" style="color:#FF00FF; text-decoration:underline;">herpowercanada.org</a>。分享您的反馈至 <a href="mailto:info@herpowercanada.org" style="color:#FF00FF; text-decoration:underline;">info@herpowercanada.org</a> - 谢谢！`
             }
         };
         let currentLang = 'en';
@@ -743,10 +750,14 @@
             // 语言按钮高亮
             document.getElementById('langEN').style.color = lang === 'en' ? '#d72660' : '#888';
             document.getElementById('langZH').style.color = lang === 'zh' ? '#d72660' : '#888';
+            // Info bar
+            document.getElementById('infoBar').innerHTML = TEXTS[lang].infoBar;
         }
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('langEN').onclick = function() { switchLang('en'); };
             document.getElementById('langZH').onclick = function() { switchLang('zh'); };
+            // Set info bar on load
+            document.getElementById('infoBar').innerHTML = TEXTS[currentLang].infoBar;
         });
     </script>
 </body>
