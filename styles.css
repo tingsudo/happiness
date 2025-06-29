@@ -59,9 +59,10 @@ nav ul {
 nav a {
     text-decoration: none;
     color: white;
-    font-weight: 600;
+    font-weight: 300;
     transition: color 0.3s ease;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 nav a:hover {
