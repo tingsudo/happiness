@@ -385,18 +385,22 @@
 </head>
 <body>
     <header>
-        <nav style="display: flex; align-items: center; justify-content: space-between;">
-            <div class="logo">
-                <img src="resources/logo.avif" alt="HerPower Logo">
+        <nav class="nav-mobile-2row">
+            <div class="nav-row nav-row-top">
+                <div class="logo">
+                    <img src="resources/logo.avif" alt="HerPower Logo">
+                </div>
+                <div id="langSwitch">
+                    <span id="langEN" class="active">EN</span> | <span id="langZH">中文</span>
+                </div>
             </div>
-            <ul style="margin-right: 1.5rem;">
-                <li><a href="https://www.herpowercanada.org/" id="navHome">Home</a></li>
-                <li><a href="https://www.herpowercanada.org/services-5-3" id="navCurriculum">Curriculum</a></li>
-                <li><a href="https://coach.herpowercanada.org/" id="navCoach">Coach</a></li>
-                <li><a href="https://www.herpowercanada.org/joinus" id="navContact">Contact Us</a></li>
-            </ul>
-            <div id="langSwitch" style="margin-left: 1rem; font-size: 1rem; cursor: pointer; user-select: none; font-weight: 600;">
-                <span id="langEN" style="color: #ef3aaa;">EN</span> | <span id="langZH" style="color: #ef3aaa;">中文</span>
+            <div class="nav-row nav-row-bottom">
+                <ul id="navLinks">
+                    <li><a href="https://www.herpowercanada.org/" id="navHome">Home</a></li>
+                    <li><a href="https://www.herpowercanada.org/services-5-3" id="navCurriculum">Curriculum</a></li>
+                    <li><a href="https://coach.herpowercanada.org/" id="navCoach">Coach</a></li>
+                    <li><a href="https://www.herpowercanada.org/joinus" id="navContact">Contact Us</a></li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -762,8 +766,8 @@
             // 评价轮播
             showTestimonial(currentTestimonial);
             // 语言按钮高亮
-            document.getElementById('langEN').style.color = lang === 'en' ? '#ef3aaa' : '#888';
-            document.getElementById('langZH').style.color = lang === 'zh' ? '#ef3aaa' : '#888';
+            document.getElementById('langEN').classList.toggle('active', lang === 'en');
+            document.getElementById('langZH').classList.toggle('active', lang === 'zh');
             // Info bar
             document.getElementById('infoBar').innerHTML = TEXTS[lang].infoBar;
         }
