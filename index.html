@@ -390,10 +390,10 @@
                 <img src="resources/logo.avif" alt="HerPower Logo">
             </div>
             <ul style="margin-right: 1.5rem;">
-                <li><a href="https://www.herpowercanada.org/" target="_blank">Home</a></li>
-                <li><a href="https://www.herpowercanada.org/services-5-3" target="_blank">Curriculum</a></li>
-                <li><a href="https://coach.herpowercanada.org/" target="_blank">Coach</a></li>
-                <li><a href="https://www.herpowercanada.org/joinus" target="_blank">Contact Us</a></li>
+                <li><a href="https://www.herpowercanada.org/" id="navHome">Home</a></li>
+                <li><a href="https://www.herpowercanada.org/services-5-3" id="navCurriculum">Curriculum</a></li>
+                <li><a href="https://coach.herpowercanada.org/" id="navCoach">Coach</a></li>
+                <li><a href="https://www.herpowercanada.org/joinus" id="navContact">Contact Us</a></li>
             </ul>
             <div id="langSwitch" style="margin-left: 1rem; font-size: 1rem; cursor: pointer; user-select: none; font-weight: 600;">
                 <span id="langEN" style="color: #ef3aaa;">EN</span> | <span id="langZH" style="color: #ef3aaa;">中文</span>
@@ -729,6 +729,11 @@
             currentLang = lang;
             // 切换页面标题
             document.title = TEXTS[lang].pageTitle;
+            // 切换导航
+            document.getElementById('navHome').textContent = TEXTS[lang].navHome;
+            document.getElementById('navCurriculum').textContent = TEXTS[lang].navCurriculum;
+            document.getElementById('navCoach').textContent = TEXTS[lang].navCoach;
+            document.getElementById('navContact').textContent = TEXTS[lang].navContact;
             // 切换标题
             document.getElementById('chatTitle').textContent = TEXTS[lang].chatTitle;
             document.getElementById('chatSubtitle').textContent = TEXTS[lang].chatSubtitle;
