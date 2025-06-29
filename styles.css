@@ -20,7 +20,7 @@ body {
 }
 
 header {
-    background-color: black;
+    background-color: #323638;
     padding: 0.75rem 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -185,7 +185,7 @@ h1 {
 }
 
 footer {
-    background-color: black;
+    background-color: #323638;
     padding: 2rem;
     text-align: center;
     margin-top: 4rem;
@@ -598,7 +598,7 @@ html {
     position: fixed;
     bottom: 40px;
     right: 40px;
-    background-color: black;
+    background-color: #323638;
     color: white;
     width: 50px;
     height: 50px;
@@ -628,7 +628,7 @@ html {
         align-items: stretch;
         padding: 0 0.5rem;
         height: auto !important;
-        background: #000;
+        background: #323638;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
     .nav-row {
