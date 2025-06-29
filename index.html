@@ -390,13 +390,13 @@
                 <img src="resources/logo.avif" alt="HerPower Logo">
             </div>
             <ul style="margin-right: 1.5rem;">
-                <li><a href="https://www.herpowercanada.org/" target="_blank" id="navHome">Home</a></li>
-                <li><a href="https://www.herpowercanada.org/services-5-3" target="_blank" id="navCurriculum">Curriculum</a></li>
-                <li><a href="https://course.herpowercanada.org/chat" target="_blank" id="navCoach">Coach</a></li>
-                <li><a href="https://www.herpowercanada.org/joinus" target="_blank" id="navContact">Contact Us</a></li>
+                <li><a href="https://www.herpowercanada.org/" target="_blank">Home</a></li>
+                <li><a href="https://www.herpowercanada.org/services-5-3" target="_blank">Curriculum</a></li>
+                <li><a href="https://coach.herpowercanada.org/" target="_blank">Coach</a></li>
+                <li><a href="https://www.herpowercanada.org/joinus" target="_blank">Contact Us</a></li>
             </ul>
             <div id="langSwitch" style="margin-left: 1rem; font-size: 1rem; cursor: pointer; user-select: none; font-weight: 600;">
-                <span id="langEN" style="color: #d72660;">EN</span> | <span id="langZH" style="color: #d72660;">中文</span>
+                <span id="langEN" style="color: #ef3aaa;">EN</span> | <span id="langZH" style="color: #ef3aaa;">中文</span>
             </div>
         </nav>
     </header>
@@ -420,7 +420,7 @@
 
         <!-- Info Bar: Curriculum & Feedback -->
         <div id="infoBar" style="background: #000; color: #fff; border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 1.2rem; border: 1px solid #333; font-size: 0.9rem; line-height: 1.4;">
-            Explore our curriculum and workshops: <a href="https://www.herpowercanada.org" target="_blank" style="color:#ec20b2; text-decoration:underline;">herpowercanada.org</a>. Share your feedback at <a href="mailto:info@herpowercanada.org" style="color:#ec20b2; text-decoration:underline;">info@herpowercanada.org</a> - thank you!
+            <!-- Content will be set by JavaScript -->
         </div>
 
         <div class="chat-messages" id="chatMessages">
@@ -595,73 +595,10 @@
             }
         });
 
-        // Collapsible disclaimer functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggle = document.getElementById('disclaimerToggle');
-            const content = document.getElementById('disclaimerContent');
-            const toggleText = document.getElementById('disclaimerToggleText');
-            const arrow = document.getElementById('disclaimerArrow');
-            let expanded = false;
-            toggle.addEventListener('click', function() {
-                expanded = !expanded;
-                if (expanded) {
-                    content.innerHTML = TEXTS[currentLang].disclaimer;
-                    content.style.display = 'block';
-                    toggleText.textContent = TEXTS[currentLang].disclaimerHide;
-                    arrow.textContent = '▲';
-                } else {
-                    content.innerHTML = '';
-                    content.style.display = 'none';
-                    toggleText.textContent = TEXTS[currentLang].disclaimerShow;
-                    arrow.textContent = '▼';
-                }
-            });
-        });
-
-        // Testimonial carousel logic
-        const testimonials = [
-            {
-                text: "As a mom, HerPower Communication Coach helped me finally have a calm, meaningful conversation with my child about screen time. It gave me the right words and approach to connect with my kid in a way that felt respectful and effective.",
-                user: "Tina L., Parent of Teen"
-            },
-            {
-                text: "I was struggling to talk to my teen about school stress. The coach's tips made our talks less tense and more productive. Highly recommend!",
-                user: "James W., Father of Two"
-            },
-            {
-                text: "This chatbot gave me practical ways to listen to my daughter and made our relationship stronger.",
-                user: "Vivian S., Mom of a 15-year-old"
-            }
-        ];
-        let currentTestimonial = 0;
-        function showTestimonial(idx) {
-            const content = document.getElementById('testimonialContent');
-            content.innerHTML = `
-                <div class="testimonial-text">${testimonials[idx].text}</div>
-                <div class="testimonial-user">${testimonials[idx].user}</div>
-            `;
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            showTestimonial(currentTestimonial);
-            document.getElementById('carouselPrev').innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
-            document.getElementById('carouselNext').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>';
-            document.getElementById('carouselPrev').onclick = function() {
-                currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-                showTestimonial(currentTestimonial);
-            };
-            document.getElementById('carouselNext').onclick = function() {
-                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-                showTestimonial(currentTestimonial);
-            };
-            setInterval(function() {
-                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-                showTestimonial(currentTestimonial);
-            }, 8000);
-        });
-
         // 多语言文本
         const TEXTS = {
             en: {
+                pageTitle: 'Chat with HerPower',
                 navHome: 'Home',
                 navCurriculum: 'Curriculum',
                 navCoach: 'Coach',
@@ -689,9 +626,10 @@
                         user: "Vivian S., Mom of a 15-year-old"
                     }
                 ],
-                infoBar: `Explore our curriculum and workshops: <a href="https://www.herpowercanada.org" target="_blank" style="color:#FF00FF; text-decoration:underline;">herpowercanada.org</a>. Share your feedback at <a href="mailto:info@herpowercanada.org" style="color:#FF00FF; text-decoration:underline;">info@herpowercanada.org</a> - thank you!`
+                infoBar: `Explore our curriculum and workshops: <a href="https://www.herpowercanada.org" target="_blank" style="color:#ef3aaa; text-decoration:underline;">herpowercanada.org</a>. Share your feedback at <a href="mailto:info@herpowercanada.org" style="color:#ef3aaa; text-decoration:underline;">info@herpowercanada.org</a> - thank you!`
             },
             zh: {
+                pageTitle: '与HerPower教练对话',
                 navHome: '首页',
                 navCurriculum: '课程',
                 navCoach: '教练',
@@ -719,18 +657,78 @@
                         user: "苏薇，15岁女孩的妈妈"
                     }
                 ],
-                infoBar: `探索我们的课程和工作坊：<a href="https://www.herpowercanada.org" target="_blank" style="color:#FF00FF; text-decoration:underline;">herpowercanada.org</a>。分享您的反馈至 <a href="mailto:info@herpowercanada.org" style="color:#FF00FF; text-decoration:underline;">info@herpowercanada.org</a> - 谢谢！`
+                infoBar: `探索我们的课程和工作坊：<a href="https://www.herpowercanada.org" target="_blank" style="color:#ef3aaa; text-decoration:underline;">herpowercanada.org</a>。分享您的反馈至 <a href="mailto:info@herpowercanada.org" style="color:#ef3aaa; text-decoration:underline;">info@herpowercanada.org</a> - 谢谢！`
             }
         };
         let currentLang = 'en';
+
+        // Collapsible disclaimer functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize disclaimer functionality
+            const toggle = document.getElementById('disclaimerToggle');
+            const content = document.getElementById('disclaimerContent');
+            const toggleText = document.getElementById('disclaimerToggleText');
+            const arrow = document.getElementById('disclaimerArrow');
+            let expanded = false;
+            toggle.addEventListener('click', function() {
+                expanded = !expanded;
+                if (expanded) {
+                    content.innerHTML = TEXTS[currentLang].disclaimer;
+                    content.style.display = 'block';
+                    toggleText.textContent = TEXTS[currentLang].disclaimerHide;
+                    arrow.textContent = '▲';
+                } else {
+                    content.innerHTML = '';
+                    content.style.display = 'none';
+                    toggleText.textContent = TEXTS[currentLang].disclaimerShow;
+                    arrow.textContent = '▼';
+                }
+            });
+
+            // Initialize testimonial carousel
+            showTestimonial(currentTestimonial);
+            document.getElementById('carouselPrev').innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
+            document.getElementById('carouselNext').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>';
+            document.getElementById('carouselPrev').onclick = function() {
+                const currentTestimonials = TEXTS[currentLang].testimonials;
+                currentTestimonial = (currentTestimonial - 1 + currentTestimonials.length) % currentTestimonials.length;
+                showTestimonial(currentTestimonial);
+            };
+            document.getElementById('carouselNext').onclick = function() {
+                const currentTestimonials = TEXTS[currentLang].testimonials;
+                currentTestimonial = (currentTestimonial + 1) % currentTestimonials.length;
+                showTestimonial(currentTestimonial);
+            };
+            setInterval(function() {
+                const currentTestimonials = TEXTS[currentLang].testimonials;
+                currentTestimonial = (currentTestimonial + 1) % currentTestimonials.length;
+                showTestimonial(currentTestimonial);
+            }, 8000);
+
+            // Initialize language switching
+            document.getElementById('langEN').onclick = function() { switchLang('en'); };
+            document.getElementById('langZH').onclick = function() { switchLang('zh'); };
+            
+            // Initialize info bar with current language
+            document.getElementById('infoBar').innerHTML = TEXTS[currentLang].infoBar;
+        });
+
+        // Testimonial carousel logic
+        let currentTestimonial = 0;
+        function showTestimonial(idx) {
+            const content = document.getElementById('testimonialContent');
+            const currentTestimonials = TEXTS[currentLang].testimonials;
+            content.innerHTML = `
+                <div class="testimonial-text">${currentTestimonials[idx].text}</div>
+                <div class="testimonial-user">${currentTestimonials[idx].user}</div>
+            `;
+        }
+
         function switchLang(lang) {
             if (lang === currentLang) return;
             currentLang = lang;
-            // 切换导航
-            document.getElementById('navHome').textContent = TEXTS[lang].navHome;
-            document.getElementById('navCurriculum').textContent = TEXTS[lang].navCurriculum;
-            document.getElementById('navCoach').textContent = TEXTS[lang].navCoach;
-            document.getElementById('navContact').textContent = TEXTS[lang].navContact;
+            // 切换页面标题
+            document.title = TEXTS[lang].pageTitle;
             // 切换标题
             document.getElementById('chatTitle').textContent = TEXTS[lang].chatTitle;
             document.getElementById('chatSubtitle').textContent = TEXTS[lang].chatSubtitle;
@@ -757,20 +755,13 @@
             // 页脚
             document.getElementById('footerCopyright').innerHTML = TEXTS[lang].copyright;
             // 评价轮播
-            testimonials = TEXTS[lang].testimonials;
             showTestimonial(currentTestimonial);
             // 语言按钮高亮
-            document.getElementById('langEN').style.color = lang === 'en' ? '#d72660' : '#888';
-            document.getElementById('langZH').style.color = lang === 'zh' ? '#d72660' : '#888';
+            document.getElementById('langEN').style.color = lang === 'en' ? '#ef3aaa' : '#888';
+            document.getElementById('langZH').style.color = lang === 'zh' ? '#ef3aaa' : '#888';
             // Info bar
             document.getElementById('infoBar').innerHTML = TEXTS[lang].infoBar;
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('langEN').onclick = function() { switchLang('en'); };
-            document.getElementById('langZH').onclick = function() { switchLang('zh'); };
-            // Set info bar on load
-            document.getElementById('infoBar').innerHTML = TEXTS[currentLang].infoBar;
-        });
     </script>
 </body>
 </html> 
